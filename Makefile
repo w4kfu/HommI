@@ -1,7 +1,8 @@
 CC              = gcc
 NASM		= nasm
 RM              = rm -f
-CFLAGS          = -W -Wall -Wextra -ansi -pedantic -D_BSD_SOURCE -std=c99 -ggdb
+CFLAGS          = -W -Wall -Wextra -ansi -pedantic -D_BSD_SOURCE -std=c99
+LFLAGS		= -lpng
 
 PATCH_DIR       = Patch
 PATCH_SRC       = 	$(PATCH_DIR)/patch.c	\
@@ -21,9 +22,15 @@ AGG_SRC		=	$(AGG_DIR)/agg.c	\
 AGG_NAME	= agg
 AGG_OBJ		= $(AGG_SRC:.c=.o)
 
+PAL_DIR		= Pal
+PAL_SRC		=	$(PAL_DIR)/main.c	\
+			$(PAL_DIR)/pal.c
+PAL_NAME	= pal
+PAL_OBJ		= $(PAL_SRC:.c=.o)
+
 BIN_DIR		= bin
 
-all: $(PATCH_NAME) $(SOUND_NAME) $(AGG_NAME)
+all: $(PATCH_NAME) $(SOUND_NAME) $(AGG_NAME) $(PAL_NAME)
 
 $(PATCH_NAME): $(BIN_DIR) $(PATCH_OBJ)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(PATCH_NAME) $(PATCH_OBJ)
@@ -34,6 +41,9 @@ $(SOUND_NAME): $(BIN_DIR) $(SOUND_OBJ)
 $(AGG_NAME): $(BIN_DIR) $(AGG_OBJ)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(AGG_NAME) $(AGG_OBJ)
 
+$(PAL_NAME): $(BIN_DIR) $(PAL_OBJ)
+	$(CC) $(CFLAGS) $(LFLAGS) -o $(BIN_DIR)/$(PAL_NAME) $(PAL_OBJ)
+
 $(BIN_DIR):
 	mkdir $(BIN_DIR)
 
@@ -41,6 +51,7 @@ clean:
 	$(RM) $(SOUND_OBJ)
 	$(RM) $(PATCH_OBJ)
 	$(RM) $(AGG_OBJ)
+	$(RM) $(PAL_OBJ)
 
 distclean:  clean
 	$(RM) -r $(BIN_DIR)
