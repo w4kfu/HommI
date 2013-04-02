@@ -28,9 +28,16 @@ PAL_SRC		=	$(PAL_DIR)/main.c	\
 PAL_NAME	= pal
 PAL_OBJ		= $(PAL_SRC:.c=.o)
 
+BMP_DIR		= Bmp
+BMP_SRC		=	$(BMP_DIR)/main.c	\
+			$(BMP_DIR)/bmp.c	\
+			$(PAL_DIR)/pal.c
+BMP_NAME	= bmp
+BMP_OBJ		= $(BMP_SRC:.c=.o)
+
 BIN_DIR		= bin
 
-all: $(PATCH_NAME) $(SOUND_NAME) $(AGG_NAME) $(PAL_NAME)
+all: $(PATCH_NAME) $(SOUND_NAME) $(AGG_NAME) $(PAL_NAME) $(BMP_NAME)
 
 $(PATCH_NAME): $(BIN_DIR) $(PATCH_OBJ)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(PATCH_NAME) $(PATCH_OBJ)
@@ -44,6 +51,9 @@ $(AGG_NAME): $(BIN_DIR) $(AGG_OBJ)
 $(PAL_NAME): $(BIN_DIR) $(PAL_OBJ)
 	$(CC) $(CFLAGS) $(LFLAGS) -o $(BIN_DIR)/$(PAL_NAME) $(PAL_OBJ)
 
+$(BMP_NAME): $(BIN_DIR) $(BMP_OBJ)
+	$(CC) $(CFLAGS) $(LFLAGS) -o $(BIN_DIR)/$(BMP_NAME) $(BMP_OBJ)
+
 $(BIN_DIR):
 	mkdir $(BIN_DIR)
 
@@ -52,6 +62,7 @@ clean:
 	$(RM) $(PATCH_OBJ)
 	$(RM) $(AGG_OBJ)
 	$(RM) $(PAL_OBJ)
+	$(RM) $(BMP_OBJ)
 
 distclean:  clean
 	$(RM) -r $(BIN_DIR)

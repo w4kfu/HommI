@@ -14,6 +14,7 @@ struct color
 
 unsigned char *init_palette(FILE *fin);
 unsigned char *expand_palette(unsigned char *pal, unsigned square_width, unsigned square_height);
+unsigned char *open_palette(char *filename);
 
 #endif // __PAL_H__
 

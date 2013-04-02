@@ -1,5 +1,20 @@
 #include "pal.h"
 
+unsigned char *open_palette(char *filename)
+{
+	FILE *fin = NULL;
+	unsigned char *pal = NULL;
+
+	if (!(fin = fopen(filename, "rb")))
+	{
+		perror("fopen()");
+		return NULL;
+	}
+	pal = init_palette(fin);
+	fclose(fin);
+	return pal;
+}
+
 unsigned char *init_palette(FILE *fin)
 {
 	unsigned char *pal = NULL;
