@@ -42,12 +42,10 @@ int writeImage(char* filename, int width, int height, unsigned char *buffer, cha
 	}
 	png_init_io(png_ptr, fp);
 
-	// Write header (8 bit colour depth)
 	png_set_IHDR(png_ptr, info_ptr, width, height,
 			8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE,
 			PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 
-	// Set title
 	if (title != NULL)
 	{
 		png_text title_text;
@@ -59,10 +57,8 @@ int writeImage(char* filename, int width, int height, unsigned char *buffer, cha
 
 	png_write_info(png_ptr, info_ptr);
 
-	// Allocate memory for one row (3 bytes per pixel - RGB)
 	row = (png_bytep) malloc(3 * width * sizeof(png_byte));
 
-	// Write image data
 	int x, y;
 	for (y = 0; y < height; y++)
 	{
@@ -74,7 +70,6 @@ int writeImage(char* filename, int width, int height, unsigned char *buffer, cha
 		png_write_row(png_ptr, row);
 	}
 
-	// End write
 	png_write_end(png_ptr, NULL);
 
 	if (fp != NULL)
