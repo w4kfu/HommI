@@ -30,15 +30,11 @@ Sound, music files can be handled by this [program][1].
 
 ## bin
 
-## BIN ; bkg ; bmp
+## BIN
+
+## BMP ; bkg ; bmp
 
 Image files, 8bit per pixel, it's indexed image color, palette can be found in *.pal, thoses files can be handles by this [program][3].
-
-## bkg
-
-## bmp
-
-## BMP
 
 ## fnt
 
