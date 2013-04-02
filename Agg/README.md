@@ -38,6 +38,26 @@ Image files, 8bit per pixel, it's indexed image color, palette can be found in *
 
 ## fnt
 
+Maybe font file format
+
+### bigfont.fnt
+
+	00000000  10 00 0c 00 66 6f 6e 74  2e 69 63 6e 00 00 00 00  |....font.icn....|
+	00000010  00                                                |.|
+	00000011
+
+### smalfont.fnt
+
+	00000000  0c 00 09 00 73 6d 61 6c  66 6f 6e 74 2e 69 63 6e  |....smalfont.icn|
+	00000010  00                                                |.|
+	00000011
+
+### File structure
+
+	+0x00 : Width ?
+	+0x02 : Height ?
+	+0x04 : Filename[13]
+
 ## icn
 
 ## ICN
