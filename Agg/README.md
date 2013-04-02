@@ -30,7 +30,9 @@ Sound, music files can be handled by this [program][1].
 
 ## bin
 
-## BIN
+## BIN ; bkg ; bmp
+
+Image files, 8bit per pixel, it's indexed image color, palette can be found in *.pal, thoses files can be handles by this [program][3].
 
 ## bkg
 
@@ -69,3 +71,4 @@ Palette files can be handled by this [program][2].
 
 [1]:https://github.com/w4kfu/HommI/tree/master/Sound
 [2]:https://github.com/w4kfu/HommI/tree/master/Pal
+[3]:https://github.com/w4kfu/HommI/tree/master/Bmp
