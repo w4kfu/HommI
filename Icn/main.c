@@ -90,16 +90,19 @@ int main(int argc, char *argv[])
 	unsigned int width;
 	unsigned int height;
 	unsigned char *dataimg = NULL;
+	unsigned char *pal = NULL;
 	char outputname[4096];
 	unsigned int i;
 
-	if (argc != 2)
+	if (argc != 3)
 	{
-		fprintf(stderr, "%s <*.icn>\n", argv[0]);
+		fprintf(stderr, "%s <*.icn> <*.pal>\n", argv[0]);
 		return EXIT_FAILURE;
 	}
 	if ((icn = openicn(argv[1])))
 	{
+		if (!(pal = open_palette(argv[2])))
+			return EXIT_FAILURE;
 		printicninfo(icn);
 		width = icngetmaxwidth(icn);
 		height = icngetmaxheight(icn);
@@ -108,7 +111,10 @@ int main(int argc, char *argv[])
 		for (i = 0; i < icn->numentry; i++)
 		{
 			sprintf(outputname, "./extract/%s_%d.png", "TESTO", i);
-			dataimg = icnmakeimg(icn, i, width, height);
+			if (strstr(argv[1], "font.icn"))
+				dataimg = icnmakeimg(icn, i, width, height, pal, 0);
+			else
+				dataimg = icnmakeimg(icn, i, width, height, pal, 1);
 			if (dataimg)
 			{
 				writeImage(outputname, width, height, dataimg, "LOL");

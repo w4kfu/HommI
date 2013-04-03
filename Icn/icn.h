@@ -31,7 +31,8 @@ void printicninfo(struct icn *icn);
 
 int icngetmaxheight(struct icn *icn);
 int icngetmaxwidth(struct icn *icn);
-unsigned char *icnmakeimg(struct icn *icn, int numentry, unsigned short width, unsigned short height);
+unsigned char *icnmakeimg(struct icn *icn, int numentry, unsigned short width, unsigned short height,
+			unsigned char *pal, unsigned int type);
 
 #endif // __ICN_H__
 

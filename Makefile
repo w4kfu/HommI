@@ -38,6 +38,7 @@ BMP_OBJ		= $(BMP_SRC:.c=.o)
 ICN_DIR		= Icn
 ICN_SRC		=	$(ICN_DIR)/main.c	\
 			$(ICN_DIR)/icn.c	\
+			$(PAL_DIR)/pal.c
 
 ICN_NAME	= icn
 ICN_OBJ		= $(ICN_SRC:.c=.o)

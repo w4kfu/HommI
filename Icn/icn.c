@@ -108,7 +108,8 @@ int icngetmaxheight(struct icn *icn)
 	return height;
 }
 
-unsigned char *icnmakeimg(struct icn *icn, int numentry, unsigned short width, unsigned short height)
+unsigned char *icnmakeimg(struct icn *icn, int numentry, unsigned short width, unsigned short height,
+			unsigned char *pal, unsigned int type)
 {
 	unsigned char *imgbuf = NULL;
 	unsigned char *simgbuf = NULL;
@@ -144,7 +145,7 @@ unsigned char *icnmakeimg(struct icn *icn, int numentry, unsigned short width, u
 			}
 			actual_width = 0;
 		}
-		else if (actual > 0x80)
+		else if (actual & 0x80)
 		{
 			actual &= 0x7F;
 			for (x = 0; x < actual; x++)
@@ -158,15 +159,18 @@ unsigned char *icnmakeimg(struct icn *icn, int numentry, unsigned short width, u
 		{
 			for (x = 0; x < actual; x++)
 			{
-				memcpy(imgbuf, &color2, sizeof (struct color));
+				if (type == 1)
+					memcpy(imgbuf, &pal[*databuf++], 3);
+				else
+					memcpy(imgbuf, &color2, sizeof (struct color));
 				imgbuf += 3;
 			}
 			actual_width += actual;
 		}
-		if (actual_width == width)
+		if (actual_width > width)
 			actual_width = 0;
 	}
-	if ((imgbuf - simgbuf) != (width * height * 3))
+	if ((imgbuf - simgbuf) < (width * height * 3))
 	{
 		x = (width * height * 3) - (imgbuf - simgbuf);
 		x /= 3;

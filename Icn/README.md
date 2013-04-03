@@ -1,4 +1,5 @@
 
+font.icn (and maybe other files) must be handled differently, check in the source the arg "type", those "special" use default color
 
 ## Example "font.icn"
 
