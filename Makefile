@@ -1,7 +1,7 @@
 CC              = gcc
 NASM		= nasm
 RM              = rm -f
-CFLAGS          = -W -Wall -Wextra -ansi -pedantic -D_BSD_SOURCE -std=c99
+CFLAGS          = -W -Wall -Wextra -ansi -pedantic -D_BSD_SOURCE -std=c99 -ggdb
 LFLAGS		= -lpng
 
 PATCH_DIR       = Patch
@@ -35,9 +35,16 @@ BMP_SRC		=	$(BMP_DIR)/main.c	\
 BMP_NAME	= bmp
 BMP_OBJ		= $(BMP_SRC:.c=.o)
 
+ICN_DIR		= Icn
+ICN_SRC		=	$(ICN_DIR)/main.c	\
+			$(ICN_DIR)/icn.c	\
+
+ICN_NAME	= icn
+ICN_OBJ		= $(ICN_SRC:.c=.o)
+
 BIN_DIR		= bin
 
-all: $(PATCH_NAME) $(SOUND_NAME) $(AGG_NAME) $(PAL_NAME) $(BMP_NAME)
+all: $(PATCH_NAME) $(SOUND_NAME) $(AGG_NAME) $(PAL_NAME) $(BMP_NAME) $(ICN_NAME)
 
 $(PATCH_NAME): $(BIN_DIR) $(PATCH_OBJ)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(PATCH_NAME) $(PATCH_OBJ)
@@ -54,6 +61,9 @@ $(PAL_NAME): $(BIN_DIR) $(PAL_OBJ)
 $(BMP_NAME): $(BIN_DIR) $(BMP_OBJ)
 	$(CC) $(CFLAGS) $(LFLAGS) -o $(BIN_DIR)/$(BMP_NAME) $(BMP_OBJ)
 
+$(ICN_NAME): $(BIN_DIR) $(ICN_OBJ)
+	$(CC) $(CFLAGS) $(LFLAGS) -o $(BIN_DIR)/$(ICN_NAME) $(ICN_OBJ)
+
 $(BIN_DIR):
 	mkdir $(BIN_DIR)
 
@@ -63,6 +73,7 @@ clean:
 	$(RM) $(AGG_OBJ)
 	$(RM) $(PAL_OBJ)
 	$(RM) $(BMP_OBJ)
+	$(RM) $(ICN_OBJ)
 
 distclean:  clean
 	$(RM) -r $(BIN_DIR)

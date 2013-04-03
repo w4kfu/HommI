@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <png.h>
 
-#include "bmp.h"
+#include "icn.h"
 
 void setRGB(png_byte *ptr, unsigned char r, unsigned char g, unsigned char b)
 {
@@ -86,18 +86,37 @@ int writeImage(char* filename, int width, int height, unsigned char *buffer, cha
 
 int main(int argc, char *argv[])
 {
-	struct bmp *bmp = NULL;
+	struct icn *icn = NULL;
+	unsigned int width;
+	unsigned int height;
+	unsigned char *dataimg = NULL;
+	char outputname[4096];
+	unsigned int i;
 
-	if (argc != 4)
+	if (argc != 2)
 	{
-		fprintf(stderr, "%s <*.BMP|*.bmp|*.bkg> <*.pal> outfile\n", argv[0]);
+		fprintf(stderr, "%s <*.icn>\n", argv[0]);
 		return EXIT_FAILURE;
 	}
-
-	if ((bmp = convertbmp(argv[1], argv[2])))
+	if ((icn = openicn(argv[1])))
 	{
-		writeImage(argv[3], bmp->width, bmp->height, bmp->data, argv[3]);
-		closebmp(bmp);
+		printicninfo(icn);
+		width = icngetmaxwidth(icn);
+		height = icngetmaxheight(icn);
+		printf("Width = %X (%d)\n", width, width);
+		printf("Height = %X (%d)\n", height, height);
+		for (i = 0; i < icn->numentry; i++)
+		{
+			sprintf(outputname, "./extract/%s_%d.png", "TESTO", i);
+			dataimg = icnmakeimg(icn, i, width, height);
+			if (dataimg)
+			{
+				writeImage(outputname, width, height, dataimg, "LOL");
+				free(dataimg);
+			}
+		}
+		closeicn(icn);
 	}
+
 	return 0;
 }
